@@ -1,10 +1,10 @@
-use crate::rot13;
+use crate::rot13::rot13;
 
 macro_rules! test_rot_13 {
     ($message:tt, $cipher:tt) => {
-        let rot_13_cipher = rot13::encrypt($message);
+        let rot_13_cipher = rot13($message);
         assert_eq!(rot_13_cipher, $cipher);
-        assert_eq!(rot13::decrypt(&rot_13_cipher), $message);
+        assert_eq!(rot13(&rot_13_cipher), $message);
     };
 }
 

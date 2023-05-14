@@ -6,19 +6,13 @@ mod rot13;
 #[cfg(test)]
 mod tests;
 
-async fn encrypt(extract::Path(message): extract::Path<String>) -> String {
-    rot13::encrypt(&message)
-}
-
-async fn decrypt(extract::Path(cipher): extract::Path<String>) -> String {
-    rot13::decrypt(&cipher)
+async fn rot13(extract::Path(message): extract::Path<String>) -> String {
+    rot13::rot13(&message)
 }
 
 #[tokio::main]
 async fn main() {
-    let app = Router::new()
-        .route("/encrypt/:message", get(encrypt))
-        .route("/decrypt/:cipher", get(decrypt));
+    let app = Router::new().route("/:message", get(rot13));
 
     let listen_address =
         env::var("LISTEN_ADDRESS").unwrap_or_else(|_| String::from("127.0.0.1:8000"));
